@@ -32,8 +32,8 @@ memory space random access operations perform well. This is because elements in
 the array are stored sequentially.
 
 Note, arrays are useful because their indecies can be computed at run-time. This
-is useful depending on the use case. Below is a snippet of how the index calcula-
-tion is performed.
+is useful depending on the use case. Below is a snippet of how the index calculation 
+is performed.
 
 ```
   int myArray[5]; // declaration of integer array with 5 elements
@@ -47,7 +47,7 @@ Take the two-dimensional array below for example.
 ```
   int twoDArray[3][4]; // declaration of 2D integer array with 3 rows and 4 columns
   int row = 2, col = 3;
-  int element = myArray[index]; // Index calculation: address_of_array + (row * number_of_columns + col) * sizeof(int))
+  int element = twoDArray[index]; // Index calculation: address_of_array + (row * number_of_columns + col) * sizeof(int))
 ```
 
 *Time complexity* - arrays take linear *O(n)* space in the number of elements `n` they hold.
@@ -113,7 +113,7 @@ The `next pointer` points to the next node or null (`null` meaning end of the li
   * TC - *O(n)* worst case. Note, if inserting at the head *O(1)*
 * Deletion
   * removing an element from a linked list
-  * TC - *O(n)* worst case. Note, if inserting at the head *O(1)*
+  * TC - *O(n)* worst case. Note, if deleting at the head *O(1)*
 * Searching
   * traversing linked list one node at a time
   * TC - *O(n)*
@@ -157,7 +157,7 @@ can be implemented using recursion or a manual stack.
 **Queue**: is a linear abstract data type that can contain a long list of elements. These elements
 can be added to the queue (`enqueue` operation) or removed from the queue (`dequeue` operation).
 Usually, the end of the sequence in which the elements are added to the queueh is called the back, 
-tail, rear of the queue and the end at which elements are removed is called the head or from of 
+tail, rear of the queue and the end at which elements are removed is called the head or front of 
 the queue. Queues can be implemented using array or singly linked lists.
 
 The behavior of a queue is FIFO. Whats important to remember about them is how they can grow 
@@ -169,7 +169,7 @@ and shrink in size. BFS is commonly implemented using queues.
   * TC - *O(1)* always add to back of queue
 * Dequeue
   * function used to remove elements from the from of the queue
-  * TC - *O(1)* always remove from from of queue
+  * TC - *O(1)* always remove from front of queue
 * Front
   * pointer element responsible for fetching the first element from the queue
   * TC - *O(1)*
