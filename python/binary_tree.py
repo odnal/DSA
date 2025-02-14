@@ -31,7 +31,8 @@ def insert_level_order(arr):
 
     return root
         
-""" # A recursive approach to creating a binary tree from an input array
+    """ 
+    # A recursive approach to creating a binary tree from an input array
 def insert_level_order(arr, root, i, n):
     # base case
     if i < n:
@@ -44,7 +45,8 @@ def insert_level_order(arr, root, i, n):
         root.left = insert_level_order(arr, root.left, l, n)
         root.right = insert_level_order(arr, root.right, r, n)
 
-    return root """
+    return root 
+    """
 
 # Level order traversal - BFS
 def level_order_traversal(root):
@@ -150,8 +152,7 @@ def iterative_postorder(root):
     res = []
     while stack:
         node = stack.pop()
-        if node:
-            res.append(node.val)
+        res.append(node.val)
         if node.left:
             stack.append(node.left)
         if node.right:
@@ -160,7 +161,28 @@ def iterative_postorder(root):
     #res.reverse()
     #return res
     #return list(reversed(res))
-    return res[::-1]
+    return res[::-1] # kind of a hack (we actually dont visit every node in post order fashion) below is actual way
+
+    """
+    if not root:
+        return None
+        
+    stack = []
+    res = []
+    while stack or root:
+        while root:
+            if root.right:
+                stack.append(root.right)
+            stack.append(root)
+            root = root.left
+        node = stack.pop()
+        if stack and stack[-1] == node.right:
+            root = stack.pop()
+            stack.append(node)
+        else:
+            res.append(node.val)
+    return res 
+    """
 
 class Solution:
     def lca(self, root: "TreeNode", p: "TreeNode", q: "TreeNode"):
@@ -200,6 +222,67 @@ class Solution:
 
         return res
 
+    def diameter_of_tree(self, root):
+        maxi = 0
+        def dfs(root):
+            nonlocal maxi
+            if not root:
+                return 0
+
+            lh = dfs(root.left)
+            rh = dfs(root.right)
+            
+            maxi = max(maxi, lh+rh)
+
+            return 1 + max(lh, rh)
+
+        dfs(root)
+        return maxi
+
+    def isBalanced(self, root):
+        def dfs(root):
+            if not root:
+                return 0
+            lh = dfs(root.left)
+            rh = dfs(root.right)
+
+            if lh == -1 or rh == -1 or abs(lh-rh) > 1:
+                return -1
+            return 1 + max(lh, rh)
+        return dfs(root) != -1
+
+    def height(self, root):
+        def dfs(root):
+            if not root:
+                return 0, 0
+            lh_left, rh_left = dfs(root.left)
+            lh_right, rh_right = dfs(root.right)
+            left_height = 1 + max(lh_left, rh_left)
+            right_height = 1 + max(lh_right, rh_right)
+            return left_height, right_height
+        l, r = dfs(root)
+        return l, r
+
+    def sum_recur(self, root):
+        if not root:
+            return 0
+        return root.val + self.sum_recur(root.left) + self.sum_recur(root.right)
+    
+    def sum_iter(self, root):
+        if not root:
+            return None
+        stack = [root]
+        res = 0
+        while stack:
+            node = stack.pop()
+            res += node.val
+            if node.left:
+                stack.append(node.left)
+            if node.right:
+                stack.append(node.right)
+        return res
+
+
 if __name__ == "__main__":
 
     arr = [1,3,4,6]
@@ -218,7 +301,9 @@ if __name__ == "__main__":
     post_order(root)
     print()
 
-    level_order_traversal(root)
+    print("HERE")
+    print(level_order_traversal(root))
+    print(Solution().level_order(root))
 
 
     print(iterative_inorder(root))
@@ -229,7 +314,7 @@ if __name__ == "__main__":
     tree = [5,3,8,1,4,7,9,None,2]
     root = insert_level_order(tree)
     print(preorder_traversal(root))
-    print(Solution().lca(root, TreeNode(3), TreeNode(8)).val)
+    print(Solution().lca(root, TreeNode(9), TreeNode(3)).val)
     print(Solution().level_order(root))
 
     import heapq
@@ -242,3 +327,25 @@ if __name__ == "__main__":
     print(heap)
     heapq.heappush(heap, -3)
     print(heap)
+
+
+    a = [1,2,3,3]
+    t = insert_level_order(a)
+    print("HERE")
+    print(Solution().level_order(t))
+    print(Solution().sum_recur(t))
+    print(Solution().sum_iter(t))
+    print(Solution().diameter_of_tree(t))
+
+
+    x = [1,2,3,4,5,None,4,4,4,None,3,None,3]
+    z = insert_level_order(x)
+    print(Solution().level_order(z))
+    print(Solution().isBalanced(z))
+    print(Solution().height(z))
+
+    x = [1,2,2,3,3,None,None,4,4]
+    z = insert_level_order(x)
+    print(Solution().level_order(z))
+    print(Solution().isBalanced(z))
+    print(Solution().height(z))

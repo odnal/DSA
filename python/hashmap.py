@@ -56,7 +56,7 @@ if __name__ == "__main__":
     hash_table.hash_put(100)
     hash_table.hash_put(100)
 
-    hash_table.print_table()
+    #hash_table.print_table()
 
     print(hash_table.hash_lookup(100))
     hash_table.hash_remove("jake")
